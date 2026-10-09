@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llama-ondemand"
+version = "0.1.0"
+description = "Start llama.cpp's llama-server on demand, locally or over ssh, stop it when idle, and never touch a server it didn't start."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "The llama-ondemand authors" }]
+requires-python = ">=3.10"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+keywords = ["llama.cpp", "llama-server", "llm", "gguf", "local-models", "ssh"]
+
+[project.scripts]
+llama-ondemand = "llama_ondemand.cli:main"
+
+[tool.setuptools]
+packages = ["llama_ondemand"]
