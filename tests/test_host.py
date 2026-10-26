@@ -1,4 +1,10 @@
+# PROVENANCE
+# written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
+# modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | non-loopback redirect regression test and provenance block added
+# END PROVENANCE
 """The host helper: start on demand, reuse any healthy server, stop only ours and only when idle."""
+import contextlib
+import http.server
 import io
 import json
 import os
@@ -6,6 +12,7 @@ import shutil
 import signal
 import sys
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 
@@ -15,6 +22,31 @@ from llama_ondemand import host as llama_remote
 from llama_ondemand.host import Host
 
 MIB = 1_048_576
+
+
+@contextlib.contextmanager
+def redirect_server():
+    class Handler(http.server.BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(302)
+            self.send_header("Location", "http://192.0.2.1/should-not-be-requested")
+            self.end_headers()
+
+        def log_message(self, format, *args):
+            pass
+
+    try:
+        server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    except PermissionError as exc:
+        raise unittest.SkipTest("local sockets unavailable") from exc
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        yield "http://127.0.0.1:%d" % server.server_port
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join()
 
 
 class FakeWorld:
@@ -560,6 +592,12 @@ class JobHoldTests(Base):
 
 
 class ChatAndMainTests(Base):
+    def test_http_refuses_redirect_to_non_loopback(self):
+        with redirect_server() as base_url:
+            code, body = llama_remote._http("GET", base_url + "/health", timeout=1)
+        self.assertEqual(code, 0)
+        self.assertEqual(body, "redirect refused (HTTP 302)")
+
     def test_chat_forces_non_streaming_and_touches(self):
         self.h.start("workhorse-12b")
         self.w.t += 50

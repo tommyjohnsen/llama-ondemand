@@ -1,3 +1,7 @@
+# PROVENANCE
+# written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
+# modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | redirect SSRF fix and provenance block added
+# END PROVENANCE
 """Chat-completion plumbing: parse llama.cpp responses and talk to a server on loopback."""
 import ipaddress
 import json
@@ -19,6 +23,11 @@ class ClientError(Exception):
 
 class ContextTooLarge(ClientError):
     """The prompt plus max_tokens does not fit the server context; retrying will not help."""
+
+
+class _RejectRedirects(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
 
 
 @dataclass(frozen=True)
@@ -92,7 +101,8 @@ class LlamaClient:
         self.model = model
         self.timeout = timeout
         # No proxy handler: a loopback request must never be routed through a proxy.
-        self._open = opener or urllib.request.build_opener(urllib.request.ProxyHandler({})).open
+        self._open = opener or urllib.request.build_opener(
+            urllib.request.ProxyHandler({}), _RejectRedirects()).open
         self._clock = clock
 
     def chat(self, messages, **options):
@@ -110,6 +120,8 @@ class LlamaClient:
                 if close is not None:
                     close()
         except urllib.error.HTTPError as exc:
+            if 300 <= exc.code < 400:
+                raise ClientError("server redirect refused (HTTP %s)" % exc.code) from exc
             body = exc.read(4096).decode("utf-8", "replace")
             if exc.code == 400 and "context" in body.lower():
                 raise ContextTooLarge("prompt exceeds the server context") from exc

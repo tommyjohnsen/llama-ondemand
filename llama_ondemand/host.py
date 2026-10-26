@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# PROVENANCE
+# written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
+# modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | redirect SSRF fix and provenance block added
+# END PROVENANCE
 """Runs on the model host as the account that owns the models. Self-contained (stdlib only): the
 manager copies this file into its state directory and runs it there, locally or over ssh.
 
@@ -36,6 +40,11 @@ LOCK = "lock"
 JOB_HOLD = "job_hold"
 OWNER = "llama-ondemand"
 _JOB = re.compile(r"\A[A-Za-z0-9][A-Za-z0-9._:-]{0,79}\Z")
+
+
+class _RejectRedirects(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
 
 
 def _expand(path):
@@ -98,13 +107,15 @@ def _pid_alive(pid):
 
 
 def _http(method, url, body=None, timeout=5.0):
-    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), _RejectRedirects())
     data = None if body is None else json.dumps(body).encode("utf-8")
     req = urllib.request.Request(url, data=data, method=method, headers={"Content-Type": "application/json"})
     try:
         with opener.open(req, timeout=timeout) as resp:
             return resp.status, resp.read(4 * MIB + 1).decode("utf-8", "replace")
     except urllib.error.HTTPError as exc:
+        if 300 <= exc.code < 400:
+            return 0, "redirect refused (HTTP %d)" % exc.code
         return exc.code, exc.read(65536).decode("utf-8", "replace")
     except Exception:
         return 0, ""

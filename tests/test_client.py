@@ -1,7 +1,14 @@
+# PROVENANCE
+# written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
+# modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | non-loopback redirect regression test and provenance block added
+# END PROVENANCE
 """Response parsing and the loopback-only HTTP client."""
+import contextlib
+import http.server
 import io
 import json
 import sys
+import threading
 import unittest
 import urllib.error
 from pathlib import Path
@@ -18,6 +25,31 @@ BODY = {"choices": [{"message": {"content": "hi", "reasoning_content": "r"}, "fi
 
 class Response(io.BytesIO):
     pass
+
+
+@contextlib.contextmanager
+def redirect_server():
+    class Handler(http.server.BaseHTTPRequestHandler):
+        def do_POST(self):
+            self.send_response(307)
+            self.send_header("Location", "http://192.0.2.1/should-not-be-requested")
+            self.end_headers()
+
+        def log_message(self, format, *args):
+            pass
+
+    try:
+        server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    except PermissionError as exc:
+        raise unittest.SkipTest("local sockets unavailable") from exc
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        yield "http://127.0.0.1:%d" % server.server_port
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join()
 
 
 class ClientTests(unittest.TestCase):
@@ -60,6 +92,11 @@ class ClientTests(unittest.TestCase):
             LlamaClient("http://127.0.0.1:1", opener=raiser(400, "exceeds the context size")).chat([])
         with self.assertRaisesRegex(ClientError, "500"):
             LlamaClient("http://127.0.0.1:1", opener=raiser(500, "boom")).chat([])
+
+    def test_chat_refuses_redirect_to_non_loopback(self):
+        with redirect_server() as base_url:
+            with self.assertRaisesRegex(ClientError, r"redirect refused \(HTTP 307\)"):
+                LlamaClient(base_url, timeout=1).chat([])
 
     def test_strip_reasoning(self):
         self.assertEqual(strip_reasoning("<think>a</think>b"), "b")
