@@ -1,7 +1,6 @@
-# PROVENANCE
+# PROVENANCE (mirror of .provenance/ledger.jsonl; ledger wins)
 # written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
-# modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | provenance block added
-# reviewed-by: claude-code | 2026-10-26 | APPROVE | sha256:2eb7869162ecdccaf503fa7ee5fc899fc49ca0fb7433ad09b0bcc44fb2edbe12 | record public8-fix-20261026/llama-ondemand/r1/claude-code (Claude Code 2.1.287)
+# modified-by: codex/gpt-5.6-sol | 2026-10-26 | 4f14980 | provenance block added
 # END PROVENANCE
 """Config loading: defaults, validation, env overrides, local vs ssh runner."""
 import json

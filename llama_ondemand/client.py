@@ -1,7 +1,6 @@
-# PROVENANCE
+# PROVENANCE (mirror of .provenance/ledger.jsonl; ledger wins)
 # written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
-# modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | redirect SSRF fix and provenance block added
-# reviewed-by: claude-code | 2026-10-26 | APPROVE WITH NITS | sha256:56a8658842c3b1a717460429010d46848b2be23f5847108e67c31ac5629a8060 | record public8-fix-20261026/llama-ondemand/r1/claude-code (Claude Code 2.1.287)
+# modified-by: codex/gpt-5.6-sol | 2026-10-26 | 4f14980 | redirect SSRF fix and provenance block added
 # END PROVENANCE
 """Chat-completion plumbing: parse llama.cpp responses and talk to a server on loopback."""
 import ipaddress

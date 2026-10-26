@@ -1,7 +1,6 @@
-# PROVENANCE
+# PROVENANCE (mirror of .provenance/ledger.jsonl; ledger wins)
 # written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
-# modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | provenance block added
-# reviewed-by: claude-code | 2026-10-26 | APPROVE | sha256:f06611c8dc344bae587046695b089ae862d819e3f3873a608b24adb075beb1c0 | record public8-fix-20261026/llama-ondemand/r1/claude-code (Claude Code 2.1.287)
+# modified-by: codex/gpt-5.6-sol | 2026-10-26 | 4f14980 | provenance block added
 # END PROVENANCE
 """Real processes, local mode: the CLI starts a stand-in llama-server, chats, and stops only its own server."""
 import contextlib

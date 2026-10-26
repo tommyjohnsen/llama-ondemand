@@ -1,7 +1,6 @@
-# PROVENANCE
+# PROVENANCE (mirror of .provenance/ledger.jsonl; ledger wins)
 # written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
-# modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | provenance block added
-# reviewed-by: claude-code | 2026-10-26 | APPROVE | sha256:91c7e06d8733b000984d4192b6c2e30659f5c8d40a976e41723b6145f16e36b1 | record public8-fix-20261026/llama-ondemand/r1/claude-code (Claude Code 2.1.287)
+# modified-by: codex/gpt-5.6-sol | 2026-10-26 | 4f14980 | provenance block added
 # END PROVENANCE
 """Client-side manager: one helper install, model choice per kind, reuse and swap rules, chat over ssh."""
 import contextlib
