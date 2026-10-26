@@ -2,6 +2,7 @@
 # PROVENANCE (mirror of .provenance/ledger.jsonl; ledger wins)
 # written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
 # modified-by: codex/gpt-5.6-sol | 2026-10-26 | 4f14980 | redirect SSRF fix and provenance block added
+# reviewed-by: claude-code/claude-opus-5-5 | 2026-10-26 | APPROVE_WITH_NITS
 # END PROVENANCE
 """Runs on the model host as the account that owns the models. Self-contained (stdlib only): the
 manager copies this file into its state directory and runs it there, locally or over ssh.
