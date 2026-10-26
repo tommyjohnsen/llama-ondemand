@@ -1,6 +1,7 @@
 # PROVENANCE
 # written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
 # modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | provenance block added
+# reviewed-by: claude-code | 2026-10-26 | APPROVE | sha256:7186c1e9feb02360f863502c82288ea3e2a6d72660bfa3ea875faace2c5a5783 | record public8-fix-20261026/llama-ondemand/r1/claude-code (Claude Code 2.1.287)
 # END PROVENANCE
 """llama-ondemand: start llama-server when needed, stop it when idle, never touch a server it didn't start."""
 import argparse

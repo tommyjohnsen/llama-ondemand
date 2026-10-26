@@ -1,6 +1,7 @@
 <!--
 PROVENANCE
 written-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026
+reviewed-by: claude-code | 2026-10-26 | APPROVE | sha256:17952d79570002508707fe455492cf738ba0b02ce9e2cef4e6853cb95e779a0a | record public8-fix-20261026/llama-ondemand/r1/claude-code (Claude Code 2.1.287)
 END PROVENANCE
 -->
 # Provenance
@@ -24,6 +25,7 @@ The sha256 in a reviewed-by line is the SHA-256 of the file's bytes after removi
 ```text
 PROVENANCE
 written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
+reviewed-by: claude-code | 2026-10-26 | APPROVE | sha256:98a55bf66ecfdda162f00c3800299f1829b5f16b7ead5a96f61e40599d7b3ff5 | record public8-fix-20261026/llama-ondemand/r1/claude-code (Claude Code 2.1.287)
 END PROVENANCE
 ```
 
@@ -32,5 +34,6 @@ END PROVENANCE
 ```text
 PROVENANCE
 written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
+reviewed-by: claude-code | 2026-10-26 | APPROVE | sha256:7def310f30686bbafdfec1ef0f3844abb76b6db4d12e944e4ae90e7ebc47c596 | record public8-fix-20261026/llama-ondemand/r1/claude-code (Claude Code 2.1.287)
 END PROVENANCE
 ```

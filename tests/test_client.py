@@ -1,6 +1,7 @@
 # PROVENANCE
 # written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
 # modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | non-loopback redirect regression test and provenance block added
+# reviewed-by: claude-code | 2026-10-26 | APPROVE WITH NITS | sha256:17ab9df94a45543038be04aeca5abefc691717f46b1bc38f4e3df8a5c9fe0096 | record public8-fix-20261026/llama-ondemand/r1/claude-code (Claude Code 2.1.287)
 # END PROVENANCE
 """Response parsing and the loopback-only HTTP client."""
 import contextlib

@@ -1,6 +1,7 @@
 # PROVENANCE
 # written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
 # modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | provenance block added
+# reviewed-by: claude-code | 2026-10-26 | APPROVE | sha256:668fa152ec3a0613ef6197a25b20b621380ca4c2caacd55ea1d332d6efba204b | record public8-fix-20261026/llama-ondemand/r1/claude-code (Claude Code 2.1.287)
 # END PROVENANCE
 """CLI argument handling against a mocked manager."""
 import contextlib

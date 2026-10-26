@@ -2,6 +2,7 @@
 # PROVENANCE
 # written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
 # modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | provenance block added
+# reviewed-by: claude-code | 2026-10-26 | APPROVE | sha256:a6269ab4eeea5a3c206db2141b7d97e663910c7e744d4e7bca5f3355063d8081 | record public8-fix-20261026/llama-ondemand/r1/claude-code (Claude Code 2.1.287)
 # END PROVENANCE
 """A stand-in for llama-server used by the end-to-end test: same flags, same four endpoints."""
 import json

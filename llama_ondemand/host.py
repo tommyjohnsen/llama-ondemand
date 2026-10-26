@@ -2,6 +2,7 @@
 # PROVENANCE
 # written-by: unknown (pre-provenance) | 2026-10-09 | 85e8dc6
 # modified-by: codex (gpt-5.6-sol, codex-cli 0.154.0) | 2026-10-26 | session public8-fix-20261026 | redirect SSRF fix and provenance block added
+# reviewed-by: claude-code | 2026-10-26 | APPROVE WITH NITS | sha256:212c08a2a6d59e8df6c2776c2efa0da1dba5f3a4499f97ab5fe119c1c6ed4794 | record public8-fix-20261026/llama-ondemand/r1/claude-code (Claude Code 2.1.287)
 # END PROVENANCE
 """Runs on the model host as the account that owns the models. Self-contained (stdlib only): the
 manager copies this file into its state directory and runs it there, locally or over ssh.
